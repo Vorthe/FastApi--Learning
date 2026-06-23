@@ -108,8 +108,8 @@ async def update_book(book: BookRequest):
         if BOOKS[i].id == book.id:
             BOOKS[i] = book
             changed_book = True
-        if not changed_book:
-            raise HTTPException(status_code=404, detail="item not found")
+    if not changed_book:
+        raise HTTPException(status_code=404, detail="item not found")
 
 
 @app.delete("/books/{book_id}", status_code=status.HTTP_204_NO_CONTENT)
