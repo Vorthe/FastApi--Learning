@@ -1,0 +1,19 @@
+CREATE TABLE todos (
+        id INTEGER NOT NULL,
+        title VARCHAR,
+        description VARCHAR,
+        priority INTEGER,
+        complete BOOLEAN,
+        PRIMARY KEY (id)
+);
+(title, description, priority, complete) values ('Go to the store', 'Pick up eggs', 5, False)
+select * from todos;
+insert into todos (title, description, priority, complete) values ('Go to the store', 'Pick up eggs', 5, False);
+CREATE INDEX ix_todos_id ON todos (id);
+.schema
+insert into todos (title, description, priority, complete) values ('A new test element', 'He is getting hungry', 5, False);
+.mode markdown
+.mode column
+.mode box
+.mode table
+delete from todos where id = 4;
