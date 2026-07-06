@@ -1,71 +1,71 @@
 ```python
-from typing import Annotated---->"" 
-from fastapi import APIRouter, Depends---->""
-from pydantic import BaseModel---->""
-from sqlalchemy.orm import Session---->""
-from database import SessionLocal---->""
-from models import Users---->""
-from passlib.context import CryptContext---->""
-from starlette import status---->""
-from fastapi.security import OAuth2PasswordRequestForm---->""
+from typing import Annotated---->"خب این یعنی یه  سری چیزا مثل وابستگی ها و یا درستی پسورد رو بررسی کن نمیدونم اینطوری برداشت میکنم شایدم اشتباه میکنم ولی منظورم این نیست که انوتیتد اینکار هارو میکنه منظورم اینه انوتیتد میاد تو تاپل خواسته هایی مثل بررسی پسووردرو توی خودش جا میده " 
+from fastapi import APIRouter, Depends---->"حالا دقیق نمیدونم ولی فکرم به این مسیر میره که ای‌پی‌آی روتر همون روت هایی هست که با@ میدیم به متد درخواست و اینم توی یه متغیر روتر میریزیم دیپندز هم وابستگی ها که فکر میکنم مثل متغیر دی بی که توی تاپل میدیم ولی دلیل وجود دیپندز هنوز برام حل نشده"
+from pydantic import BaseModel---->"بیس مدل برای احراز هویست از پایدنتیک که بیس مدل هامون رو بر اساس این میسازیم که مثلا اسمش استرینگ باشه  و فیلدهارو براش مشخص میکنیم که مثلا کمتر از 3 حرف نباشه و یا همچین محدودیت هایی برای کلاینت"
+from sqlalchemy.orm import Session---->;----"از واسط یا مترجم بین دیتابیس و فست ای پی آی  قسمت او ار ام ایمپورت میکنیم سشن میکر که تولید کننده سشن هست و اشتباهنکنم و فکر میکنم کهسشن میکر سشن تولید میکنه عین یه قرار ملاقات یا جلسه که فقط توی اون دستور دیتابیس باز میشه چیزی پاک یا تولید یا اینزرت یا کریت میشه که فکر میکنم ما کنار هر کاری که میکنیم بهش احتیاجداریم"
+from database import SessionLocal---->"سشن لوکالهمون متغیر هست که توش سشن میکر هست برای ما سشن ها رو تولید میکنه"
+from models import Users---->"کلاس یوزرمون که از بیس مادر که همون دکلرتیو ارثبری میکنه اسم تیبلش یوزرز هست که مشخصات مثل اسم و ایمیل میگیره"
+from passlib.context import CryptContext---->"پسووردی که کاربر میفرسته رو توی مسیر هش میکنه نمیدونم ولی فکر میکنم شبیه سی اس آرف توکن هم اینطوری بود"
+from starlette import status---->"وضعیت رو میگه که مثلا استاتوس 200 یا 201 اشتباهنکنم برای کریت"
+from fastapi.security import OAuth2PasswordRequestForm---->"بررسی درستی  رمز عبور و یوزرنیم رو میگه که کلاینت درخواست میده به سرور ما بررسی میشه که اکثرا با انوتیتد همراهه "
 
-router = APIRouter()---->""
+router = APIRouter()---->"داخل متغیر روتر که شلوغ نشه ای‌پی‌آی روتر که برای ماژوالار کردنه و بعد اینو پاس میدیم به مین"
 
-bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")---->""
-
-
-class CreateUserRequest(BaseModel):---->""
-    username: str---->""
-    email: str---->""
-    first_name: str---->""
-    last_name: str---->""
-    password: str---->""
-    role: str---->""
+bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")---->"یه متغیر تعریف میکنیم  که کریپتوکانتکست که برای هش کردن پسوورد هست  و ذخیره کردن  هست که این کریپتوکانتکست باید شامل داخل تاپل اسکیما یا طرحواره که بایکریپت از انواع کاراکترها هش میکنه و یه  پسوورد رو خیلی طویل ترکیبی از حروف و گاها اعداد میکنه و دیپریکیتد هم اوتو هست و فکر میکنم بصورت اتوماتیک پسوورد هش شده منسوخ میشه تا برای کاربر دیگه اون استفاده نشه "
 
 
-def get_db():---->""
-    db = SessionLocal()---->""
-    try:---->""
-        yield db---->""
-    finally:---->""
-        db.close()---->""
+class CreateUserRequest(BaseModel):---->"این کلاس کریت یوزر ریکوئست برای کلاینت هست که از بیس  مدل ارث بری میکنه عملا همون قاعده و قواینین  تایپ هینت میدیم یوزرنیم استرینگ باشه"
+    username: str---->"باید حروفی باشه"
+    email: str---->"باید حروفی باشه"
+    first_name: str---->"باید حروفی باشه"
+    last_name: str---->"باید حروفی باشه"
+    password: str---->"باید حروفی باشه"
+    role: str---->"باید حروفی باشه"
 
 
-db_dependency = Annotated[Session, Depends(get_db)]---->""
+def get_db():---->"تابع گت دی بی که احتمال میدم منظورش گرفتن از دیتابیس که احتمالا یه تابع یکبار گرفتن از دیتابیسه  "
+    db = SessionLocal()---->"که با سشن میکر رو پاس داده به متغیر دی بی "
+    try:---->"تلاش میکنه یه سشن ایجاد کنه "
+        yield db---->"یدونه سشن تولید میکنه و متوقف میشه"
+    finally:---->"سرانجام"
+        db.close()---->"که بعد تولید یک عدد سشن دیتابیس رو میبنده"
 
 
-def authenticate_user(username: str, password: str, db):---->""
-    user = db.query(Users).filter(Users.username == username).first()---->""
-    if not user:---->""
-        return False---->""
-    if not bcrypt_context.verify(password, user.hashed_password):---->""
-        return False---->""
-    return True---->""
+db_dependency = Annotated[Session, Depends(get_db)]---->"توسط انوتیتد سشن و دیپندز رو تعریف میکنیم انگار اینجوری متوجه شدم ما یه متغیر به اسم دی‌بی دیپندنسی  داریم که توسط انوتیتد برای هر خط کدمون دیپندنسی و سشن برای یکبار تزرق میکنیم تا یه سری دسترسی به دیتابیس داشته باشیم من برداشتم و منظورمو اینطوری میتونم برسونم"
 
 
-@router.post("/auth", status_code=status.HTTP_201_CREATED)---->""
-async def create_user(db: db_dependency, create_user_reaquest: CreateUserRequest):---->""
-    create_user_model = Users(---->""
-        email=create_user_reaquest.email,---->""
-        username=create_user_reaquest.username,---->""
-        first_name=create_user_reaquest.first_name,---->""
-        last_name=create_user_reaquest.last_name,---->""
-        role=create_user_reaquest.role,---->""
-        hashed_password=bcrypt_context.hash(create_user_reaquest.password),---->""
-        is_active=True,---->""
+def authenticate_user(username: str, password: str, db):---->"یه تابعی که یوزر نیم و پسوورد روحروفی میگیره متغیر دی‌بی یدونه سشن ایجاد میکنه تا یکبار با این مشخصاتی که کاربر میفرسته بریم توی دیتابیس یه کوئری بزنیم"
+    user = db.query(Users).filter(Users.username == username).first()---->"با همین سشن کوئری میزنیم به تیبل یوزرز و فیلتر میکنیم از تیبل یوزرز  ببینیم یوزرنیمی که کاربر فرستاده با یوزرنیمی که توی تیبل هست اگه یکی باشه با تابع یا دستور فیرست اولین رکورد رو درمیایم و میریزیم توی متغیر یوزر "
+    if not user:---->"اگه یوزرمون نبود"
+        return False---->"فالسش میکنه"
+    if not bcrypt_context.verify(password, user.hashed_password):---->"اگه این یوزر بود و احرازشد و پسوردش وریفای نشد یا تایید نشد "
+        return False---->"بازم فالسش میکنیم"
+    return True---->"اگه داخل اون فالس ها و شرایط نرفت ترو میشه و مشخص میشه یوزر نیم و پسووردش درسته"
+
+
+@router.post("/auth", status_code=status.HTTP_201_CREATED)(---->"با متد  اندپوینت آث رو تعریف میکنیم کع اعمال زیر انجام شد با کداستاتوس 201 که به معنی ساخته شد هست به کاربر میره")
+async def create_user(db: db_dependency, create_user_reaquest: CreateUserRequest):---->"با متغیر دی بی دیپندنسی وابستگی و سشن رو تزریق میکنیم  و با پارامتر کریت یوزر ریکوئست از کاربر مشخصاتی که طبق شرایطی که با کلاس کریت یوزر ریکوئست ایجاد کردیم که از بیس مدل پایدنتیک ارث بری کرده و یکسری چیزا که مثلا باید استرینگ یا اینتیجر باشه رو بررسی میکنه"
+    create_user_model = Users(---->"خب اینجا هم به کلاس یوزر ارجاع میدیم تا با تابع دیکلریتیو که به ارث میبریم ستون های مربوطه رو ایجاد کنیم که دستورهای دیتابیس رو به زبان پایتونی مینویسیم"
+        email=create_user_reaquest.email,---->"ایمیل رو با ایمیلی که کاربر میفرسته اگه شرایطش درست بود با ایمیلی که ما درست مردیم برابر قرار میده و ایمیل ستونش رو به زبان پایتونی میسازه"
+        username=create_user_reaquest.username,---->"اینا هم با شرایط بالا که توضیح دادم ساخته میشن"
+        first_name=create_user_reaquest.first_name,---->"اینا هم با شرایط بالا که توضیح دادم ساخته میشن"
+        last_name=create_user_reaquest.last_name,---->"اینا هم با شرایط بالا که توضیح دادم ساخته میشن"
+        role=create_user_reaquest.role,---->"اینا هم با شرایط بالا که توضیح دادم ساخته میشن"
+        hashed_password=bcrypt_context.hash(create_user_reaquest.password),---->"اینا هم با شرایط بالا که توضیح دادم ساخته میشن"
+        is_active=True,---->"اینا هم با شرایط بالا که توضیح دادم ساخته میشن البته این بولین هست "
     )
-    db.add(create_user_model)---->""
-    db.commit()---->""
+    db.add(create_user_model)---->"با سشن ایجاد شده و دیپندسی تزریق میشه و میرن به تیبلمون اضافه میشن"
+    db.commit()---->"یکبار دیگه ثبت میشه و تمام و یوزر کریت میشه"
 
 
-@router.post("/token")---->""
-async def login_for_access_token(---->""
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: db_dependency---->""
+@router.post("/token")(---->"با اندپوینت توکن و متد پست میسازیم"
+async def login_for_access_token(---->"تابعی که موفقیت امیزی رو با توکن بررسی میکنه"
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: db_dependency---->"ما یه فرم دیتا از کاربر که با وابستگی که بررسی میکنه کاربر پسووردش درسته یا نه و با دیبی سشن ایجاد میکنه و توی متغیری به اسم فرم دیتا ذخیره میکنه"
 ):
-    user=authenticate_user(form_data.username,form_data.password,db)---->""
-    if not user:---->""
-        return "Failed Authentication"---->""
-    return "Successful Authentication"---->""
+    user=authenticate_user(form_data.username,form_data.password,db)---->"بعد یه متغیر داریم که تابع آسنتیکیتد یوزر رو که توضیح دادم بالا که داخلش از فرم دیتایی که کاربر فرستاده یوزرنیم و پسووردش رو با سشن بررسی میکنه و میریزه داخل یوزر"
+    if not user:---->"بعد که اطلاعات فرم دیتا کاربر با اعتبارسنجی متغیر یوزر ادغام میشه متغیر یوزر ما مشخص میکنه که یوزری هست با این یوزرنیم و پسوورد که با این شرط اگه نبود ریترن میکنه پیامی با این عنوان که کاربر اعتبارسنجی نشد"
+        return "Failed Authentication"---->"فیلد آسنتیکیتد زمانی که تو این چرخه باشه"
+    return "Successful Authentication"---->"اگه اعتبارسنجی درست باشه به چرخه فالس نمیرع و ریترن میکنه موفقیت امیز بود"
 
 
 
@@ -75,83 +75,88 @@ async def login_for_access_token(---->""
 
 
 
-from typing import Annotated---->""
-from pydantic import BaseModel, Field---->""
-from sqlalchemy.orm import Session---->""
-from fastapi import APIRouter, Depends, HTTPException, Path---->""
-from models import Todos---->""
-from database import SessionLocal---->""
-from starlette import status---->""
-
-router = APIRouter()---->""
 
 
-def get_db():---->""
-    db = SessionLocal()---->""
-    try:---->""
-        yield db---->""
-    finally:---->""
-        db.close()---->""
 
 
-db_dependency = Annotated[Session, Depends(get_db)]---->""
 
 
-class TodoRequest(BaseModel):---->""
-    title: str = Field(min_length=3)---->""
-    description: str = Field(min_length=3, max_length=100)---->""
-    priority: int = Field(gt=0, lt=6)---->""
-    complete: bool = Field()---->""
+
+from typing import Annotated---->"اینو کمابیش توضیح دادم"
+from pydantic import BaseModel, Field---->"از پایدنتیک بیس مدل و فیلد برای قانون گذاری در فیلدهایی که کاربر وارد میکنهمثلا حداقل سه تا حروف یا حداکثربرای دیسکریپشن 100 حرف از جنس استرینگ "
+from sqlalchemy.orm import Session---->"بازم سشن که توضیح دادم"
+from fastapi import APIRouter, Depends, HTTPException, Path---->"از فست ای پی ای که روتررو توضیح دادم مسیرهامون رو میرسونیم به یه روتر و اونم پاس میدیم به مین  دیپندز وابسگی هایی که  ویژگی هارو بهم میچسبونه اکسپشن برای مدیریت خطاها  که ریزکنه بجز این و اون مثلا که داخل پرانتز یه استاتوس کد مثل404 و پتس یا پچ برای قانون گذاری برای اینکه کاربر عدد های وارد شده رو بالای صفر بزاره و نره سمت اعداد منفی"
+from models import Todos---->"از مدلهایی که برای او آر ام ساختیم تیبیلی که اسمش تودوس هست رو میاریم"
+from database import SessionLocal---->"بازم سشن لوکال همون متغیری که سشن میکر رو با ویژگی هایی که ما تعریف کردیم رو میاره"
+from starlette import status---->"برای خوانا کردن کدهای استاتوسمون مثل 201 برای ساخت پست که کاربر بدونه و ببینه که ساخته شده"
+
+router = APIRouter()---->"داخل متغیر روتر که شلوغ نشه ای‌پی‌آی روتر که برای ماژوالار کردنه و بعد اینو پاس میدیم به مین"
+
+
+def get_db():---->"تابع گت دی بی که احتمال میدم منظورش گرفتن از دیتابیس که احتمالا یه تابع یکبار گرفتن از دیتابیسه  "
+    db = SessionLocal()---->"که با سشن میکر رو پاس داده به متغیر دی بی "
+    try:---->"تلاش میکنه یه سشن ایجاد کنه "
+        yield db---->"یدونه سشن تولید میکنه و متوقف میشه"
+    finally:---->"سرانجام"
+        db.close()---->"که بعد تولید یک عدد سشن دیتابیس رو میبنده"
+
+
+db_dependency = Annotated[Session, Depends(get_db)]---->"توسط انوتیتد سشن و دیپندز رو تعریف میکنیم انگار اینجوری متوجه شدم ما یه متغیر به اسم دی‌بی دیپندنسی  داریم که توسط انوتیتد برای هر خط کدمون دیپندنسی و سشن برای یکبار تزرق میکنیم تا یه سری دسترسی به دیتابیس داشته باشیم من برداشتم و منظورمو اینطوری میتونم برسونم"
+
+
+class TodoRequest(BaseModel)---->"این تودوریکوئست  برای کلاینت هست که از بیس  مدل ارث بری میکنه عملا همون قاعده و قوانین  تایپ هینت میدیم مثلا یوزرنیم استرینگ باشه و فیلدی که کلاینت پر میکنه حداقل طولش 3 تا حروف باشه"
+    title: str = Field(min_length=3)---->"باید حروفی باشه و حدقل طولش سه حروف باشه"
+    description: str = Field(min_length=3, max_length=100)---->"باید حروفی باشه و حدقل طولش سه حروف باشه"
+    priority: int = Field(gt=0, lt=6)---->"فیلد کلاینت عددش زیر صفر نباشه و بیشتر از 6 تا هم نباشه"
+    complete: bool = Field()---->"فیلد کلاینت بولین باشه "
 
 
 @router.get("/")---->""
-async def read_all(db: db_dependency):---->""
-    return db.query(Todos).all()---->""
+async def read_all(db: db_dependency):---->"تابع خواندن کل اطلاعت با سشن که هر بار یه جلسه با دیتابیس میزاره تا تمامی اطلاعات رو بگیره و به کاربر نشون بده"
+    return db.query(Todos).all()---->"به دیتابیس با سشن کوئری میزنیم به تیبیل تودوس و با دستور آل هر چی هست رو به کلاینت نشون میده"
 
 
-@router.get("/todo/{todo_id}", status_code=status.HTTP_200_OK)---->""
-async def read_todo(db: db_dependency, todo_id: int = Path(gt=0)):---->""
-    todo_model = db.query(Todos).filter(Todos.id == todo_id).first()---->""
-    if todo_model is not None:---->""
-        return todo_model---->""
-    raise HTTPException(status_code=404, detail="Todo not found.")---->""
+@router.get("/todo/{todo_id}", status_code=status.HTTP_200_OK)---->"چون میخاهیم با فقط آیدی برسیم به اطلاعات دیتابیس توی اندپوینت اصلیمون یه کرلی براکت باز میکنیم از کلاینت آیدی میخاهیم تا وارد کنه  و استاتوس کد 200 که اگه همچی درست باشه برای کلاینت نشن میده"
+async def read_todo(db: db_dependency, todo_id: int = Path(gt=0)):---->"با این تابع ورودی هایی که کاربرباید وارد کنه باید  حتما عدد باشه و یزر صفر و منفی نباشه"
+    todo_model = db.query(Todos).filter(Todos.id == todo_id).first()---->"با دی بی سشن ایجاد شده کوئری میزنیم به تیبل تودوس فیلتر میکنیم که از تیبل تودوس و ستون آیدی با آیدی که کلاینت وارد کرده درست بود اولین رکورد رو میریزه داخل متغیر تودومدل"
+    if todo_model is not None:---->"اگه متغیر تودومدل نیود داخل رکوردهامون "
+        return todo_model---->"ریترن میکنه تودومدل رو "
+    raise HTTPException(status_code=404, detail="Todo not found.")---->" و ریز میکنه یا بالا میاره  ارور 404 که توی دیتیل هم میگه تودو پیدا نشد"
 
 
 @router.post("/todo", status_code=status.HTTP_201_CREATED)---->""
 async def create_todo(db: db_dependency, todo_request: TodoRequest):---->""
-    todo_model = Todos(**todo_request.model_dump())---->""
+    todo_model = Todos(**todo_request.model_dump())---->"میریم تیبل تودوس و با تودو ریکوئست که کاربر ایجاده کرده و با دستور دامپ مدل هر چی کاربر اطلاعات داده رو میریزه داخل تیبل و ذخیره میکنیم توی متغیر تودومدل"
 
-    db.add(todo_model)---->""
-    db.commit()---->""
+    db.add(todo_model)---->"با این دستور و سشنی که باز شده اضافه میشه به دیتابیس"
+    db.commit()---->"و بعد اضافه شدن ثبت میشه"
 
 
-@router.put("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)---->""
-async def update_todo(---->""
-    db: db_dependency, todo_request: TodoRequest, todo_id: int = Path(gt=0)---->""
+@router.put("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)---->"چون میخاهیم با فقط آیدی برسیم به اطلاعات دیتابیس توی اندپوینت اصلیمون یه کرلی براکت باز میکنیم از کلاینت آیدی میخاهیم تا وارد کنه  و استاتوس کد 204 که اگه همچی درست باشه برای کلاینت نشون میده که محتوایی نیست و تقریبا به این معنی که تغییرات انجام شد"
+async def update_todo(---->"تابع آپدیت تودو"
+    db: db_dependency, todo_request: TodoRequest, todo_id: int = Path(gt=0)---->"که با سشن باز شده تغییرات کلاینت رو میکنه توی کلاسی که برای تودوریکوئست ساختیم قرار میده و همچنین آیدی که باید ایینتجر باشه و صفر و زیر صفر یا منفی نباشه"
 ):
-    todo_model = db.query(Todos).filter(Todos.id == todo_id).first()---->""
-    if todo_model is None:---->""
-        raise HTTPException(status_code=404, detail="Todo not found")---->""
+    todo_model = db.query(Todos).filter(Todos.id == todo_id).first()---->"با سشن کوئری میزنیم به تیبل تودوس فیلتر میکنیم جاییکه ای دی موجود توی تیبل برابر بود با ایدی که کلاینت وارد کرده و اولین رکورد رو که برابر بود رو میریزیم توی متغیر تودومدل"
+    if todo_model is None:---->"متغیرتودومدل اگه نبود و نان بود"
+        raise HTTPException(status_code=404, detail="Todo not found")---->" و ریز میکنه یا بالا میاره  ارور 404 که توی دیتیل هم میگه تودو پیدا نشد و اگه تو این شرایط نبود  میره پایین و وارد این چرخه نمیشه"
 
-    todo_model.title = todo_request.title---->""
-    todo_model.description = todo_request.description---->""
-    todo_model.priority = todo_request.priority---->""
-    todo_model.complete = todo_request.complete---->""
+    todo_model.title = todo_request.title---->"چون وارد چرخه نشده و ایدی درست بود هدایت میشه تایتل رو با تایتل مساوی قرار میدیم"
+    todo_model.description = todo_request.description---->"دیسکریپشن رو با دیسکریپشن مساوی قرار میدیم"
+    todo_model.priority = todo_request.priority---->"اولویت رو با اولویت مساوی قرار میدیم"
+    todo_model.complete = todo_request.complete---->"کامپیلیت رو با کامپیلیت مساوی قرار میدیم"
 
-    db.add(todo_model)---->""
-    db.commit()---->""
-
-
-@router.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)---->""
-async def delete_todo(db: db_dependency, todo_id: int = Path(gt=0)):---->""
-    todo_model = db.query(Todos).filter(Todos.id == todo_id).first()---->""
-    if todo_model is None:---->""
-        raise HTTPException(status_code=404, detail="Todo id not found")---->""
-
-    db.query(Todos).filter(Todos.id == todo_id).delete()---->""
-    db.commit()---->""
+    db.add(todo_model)---->"با این دستور و سشنی که باز شده اضافه میشه به دیتابیس"
+    db.commit()---->"و بعد اضافه شدن ثبت میشه"
 
 
+@router.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)---->"چون میخاهیم با فقط آیدی برسیم به اطلاعات دیتابیس توی اندپوینت اصلیمون یه کرلی براکت باز میکنیم از کلاینت آیدی میخاهیم تا وارد کنه  و استاتوس کد 204 که اگه همچی درست باشه برای کلاینت نشون میده که محتوایی نیست و تقریبا به این معنی که تغییرات انجام شد"
+async def delete_todo(db: db_dependency, todo_id: int = Path(gt=0)):---->"با سشن و تودوآیدی با اینتیجر باشه و این صفر و عدد منفی نباشه "
+    todo_model = db.query(Todos).filter(Todos.id == todo_id).first()---->"با سشن کوئری میزنیم به تیبل تودوس فیلتر میکنیم جاییکه ای دی موجود توی تیبل برابر بود با ایدی که کلاینت وارد کرده و اولین رکورد رو که برابر بود رو میریزیم توی متغیر تودومدل"
+    if todo_model is None:---->"متغیرتودومدل اگه نبود و نان بود"
+        raise HTTPException(status_code=404, detail="Todo id not found")---->" و ریز میکنه یا بالا میاره  ارور 404 که توی دیتیل هم میگه تودو پیدا نشد و اگه تو این شرایط نبود  میره پایین و وارد این چرخه نمیشه"
+
+    db.query(Todos).filter(Todos.id == todo_id).delete()---->"با سشن ایجاد شده کوئری میزنم به تیبل تودوس فیلترش میکنیم به جایی که آیدی موجود توی تیبل برابر بود با آیدی وارد شده و درخواست شده کلاینت برای پاک کردن  باشه دستور دیلیت پاکش میکنه"
+    db.commit()---->"و بعد اضافه شدن ثبت میشه"
 
 
 
@@ -159,16 +164,18 @@ async def delete_todo(db: db_dependency, todo_id: int = Path(gt=0)):---->""
 
 
 
-from sqlalchemy import create_engine---->""
-from sqlalchemy.orm import sessionmaker---->""
-from sqlalchemy.ext.declarative import declarative_base---->""
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./todosapp.db"---->""
-engine = create_engine(---->""
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}---->""
-)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)---->""
-Base = declarative_base()---->""
+
+from sqlalchemy import create_engine;----"کریت انجین که واصل بین دیتابیس و برناممون هست یکجور مترجمه که زبان پایتونی مارو که مثلا میگیم جدول بساز و این اطلاعات رو توش مرتب بریز رو برامون ترجمه میکنه در اصل این باعث میه ما زبان یا سینتکس اسکیول یاد نگیریم"
+from sqlalchemy.orm import sessionmaker;----"از واسط یا مترجم بین دیتابیس و فست ای پی آی  قسمت او ار ام ایمپورت میکنیم سشن میکر که تولید کننده سشن هست و اشتباهنکنم و فکر میکنم کهسشن میکر سشن تولید میکنه عین یه قرار ملاقات یا جلسه که فقط توی اون دستور دیتابیس باز میشه چیزی پاک یا تولید یا اینزرت یا کریت میشه که فکر میکنم ما کنار هر کاری که میکنیم بهش احتیاجداریم"
+from sqlalchemy.ext.declarative import declarative_base;----"دیکلرتیو بیس هم فکر میکنم پایه و اساس و مادر مدل هایی که مسازیم هست و فقط باید توی کلاس هایی که مینویسیم به ارث ببریم"
+
+SQLALCHEMY_DATABASE_URL = "sqlite:///./todosapp.db";----"اینجا با این دستور تیبلمون رو معرفی میکنیم که هر چی کرود شد تو ابن باشه"
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+);----"فعلا با این دستور با یک ترد کار میکنیم و در اینده با یکترد نمیشه چون دیتابیس میپره و نیازمند ترد بیشتری هستیم"
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine);----"سشن میکری که با این ویژگی های اوتوکامیت و اوتو فلاش فالس یعنی اون لحظه کامیت و به دیتابیس نفرسته و موتور هم همون انجین با مشخصات و ویژگی هایی که متغیر انجین توش کریت انجین هست"
+Base = declarative_base();----"متغیر بیس هم کع تابع دیکلریتیو بیس رو که پایه و مادر مدل هایی که میسازیم هست و باید از این بیس ارث بری بکنه"
 
 
 
