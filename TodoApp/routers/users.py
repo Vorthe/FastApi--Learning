@@ -53,7 +53,7 @@ async def change_password(
     db.commit()
 
 
-@router.put("phone_number/{phone_number}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put("/phone_number/{phone_number}", status_code=status.HTTP_204_NO_CONTENT)
 async def change_phone_number(
     user: user_dependency, db: db_dependency, phone_number: str
 ):
