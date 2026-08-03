@@ -15,3 +15,5 @@ htmlcov/
 .DS_Store
 
 .mypy_cache/
+.env.*
+!.env.example
