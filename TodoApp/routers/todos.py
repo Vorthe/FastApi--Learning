@@ -4,12 +4,14 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, Path, Request, status
 from ..models import Todos
 from ..database import SessionLocal
-from starlette import status
 from .auth import get_current_user
 from starlette.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
+from pathlib import Path
 
-templates = Jinja2Templates(directory="TodoApp/templates")
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
 
 router = APIRouter(prefix="/todos", tags=["todos"])
