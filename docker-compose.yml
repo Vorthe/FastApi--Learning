@@ -3,7 +3,6 @@ services:
   db:
     image: postgres:16
     container_name: todo_postgres
-
     restart: always
 
     env_file:
@@ -26,13 +25,33 @@ services:
       timeout: 5s
       retries: 10
 
+
+  redis:
+    image: redis:8-alpine
+    container_name: todo_redis
+    restart: always
+
+    ports:
+      - "6379:6379"
+
+    volumes:
+      - redis_data:/data
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+
   app:
     build: .
-
     container_name: todo_app
 
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
     env_file:
@@ -44,5 +63,7 @@ services:
     volumes:
       - .:/app
 
+
 volumes:
   postgres_data:
+  redis_data:
