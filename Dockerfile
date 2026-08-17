@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "alembic stamp head && uvicorn TodoApp.main:app --host 0.0.0.0 --port 8000"]
+CMD ["sh", "-c", "cd TodoApp && alembic stamp head && uvicorn TodoApp.main:app --host 0.0.0.0 --port 8000"]
