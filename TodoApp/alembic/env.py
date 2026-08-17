@@ -1,4 +1,6 @@
 import os
+import sys
+
 from dotenv import load_dotenv
 
 from logging.config import fileConfig
@@ -7,6 +9,9 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
+
+sys.path.append("/app")
+
 from TodoApp import models
 
 load_dotenv()
