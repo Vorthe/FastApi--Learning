@@ -1,5 +1,4 @@
 services:
-
   db:
     image: postgres:16
     container_name: todo_postgres
@@ -25,45 +24,41 @@ services:
       timeout: 5s
       retries: 10
 
-
-  redis:
-    image: redis:8-alpine
-    container_name: todo_redis
-    restart: always
-
-    ports:
-      - "6379:6379"
-
-    volumes:
-      - redis_data:/data
-
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
-
   app:
     build: .
     container_name: todo_app
+    restart: always
 
     depends_on:
       db:
         condition: service_healthy
-      redis:
-        condition: service_healthy
 
     env_file:
       - .env
-
+      
     ports:
       - "8000:8000"
 
     volumes:
       - .:/app
 
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+
+    command: >
+      tunnel
+      --no-autoupdate
+      --protocol auto
+      --edge-ip-version 4
+      run
+
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+
+    depends_on:
+      - app
 
 volumes:
   postgres_data:
-  redis_data:

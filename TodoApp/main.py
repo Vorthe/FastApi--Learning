@@ -6,8 +6,24 @@ from fastapi.staticfiles import StaticFiles
 from .database import engine
 from .models import Base
 from .routers import admin, auth, todos, users
+from contextlib import asynccontextmanager
+
+# from TodoApp.redis_client import redis_client
 
 BASE_DIR = Path(__file__).resolve().parent
+
+
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     await redis_client.ping()
+#     print("Redis Connected")
+
+#     yield
+
+#     await redis_client.aclose()
+
+
+# app = FastAPI(lifespan=lifespan)
 
 app = FastAPI()
 
